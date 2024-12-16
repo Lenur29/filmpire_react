@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/filmpire_react/static/css/main.767f6785.css",
+    "main.js": "/filmpire_react/static/js/main.eb256f9e.js",
+    "index.html": "/filmpire_react/index.html",
+    "main.767f6785.css.map": "/filmpire_react/static/css/main.767f6785.css.map",
+    "main.eb256f9e.js.map": "/filmpire_react/static/js/main.eb256f9e.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.767f6785.css",
+    "static/js/main.eb256f9e.js"
+  ]
+}
