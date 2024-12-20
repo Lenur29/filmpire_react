@@ -10,6 +10,7 @@ export const moviesApi = axios.create({
 export const fetchToken = async () => {
   try {
     const { data } = await moviesApi.get('/authentication/token/new');
+
     const token = data.request_token;
 
     if (data.success) {
@@ -18,7 +19,7 @@ export const fetchToken = async () => {
       window.location.href = `https://www.themoviedb.org/authenticate/${token}?redirect_to=${window.location.origin}/approved`;
     }
   } catch (error) {
-    console.error('Sorry, your token could not be created');
+    console.error('Sorry, your token could not be created.');
   }
 };
 
@@ -27,7 +28,7 @@ export const createSessionId = async () => {
 
   if (token) {
     try {
-      const { data: { session_id } } = await moviesApi.post('/authentication/session/new', {
+      const { data: { session_id } } = await moviesApi.post('authentication/session/new', {
         request_token: token,
       });
 

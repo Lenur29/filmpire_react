@@ -1,8 +1,8 @@
-import React from 'react';
-import { Grid } from '@mui/material';
+import React from "react";
+import { Grid } from "@mui/material";
 
-import useStyles from './styles';
-import Movie from '../Movie/Movie';
+import useStyles from "./styles";
+import { Movie } from "..";
 
 const MovieList = ({ movies, numberOfMovies, excludeFirst }) => {
   const classes = useStyles();

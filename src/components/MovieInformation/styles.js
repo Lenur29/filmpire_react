@@ -4,29 +4,23 @@ export default makeStyles((theme) => ({
   containerSpaceAround: {
     display: 'flex',
     justifyContent: 'space-around',
-    alignItems: 'center',
     margin: '10px 0 !important',
     [theme.breakpoints.down('sm')]: {
       flexDirection: 'column',
       flexWrap: 'wrap',
-      alignItems: 'normal',
     },
   },
   poster: {
     borderRadius: '20px',
     boxShadow: '0.5em 1em 1em rgb(64, 64, 70)',
-    width: '100%',
-    margin: '0 auto',
-    [theme.breakpoints.down('xl')]: {
-      maxHeight: '600px',
-    },
-    [theme.breakpoints.down('lg')]: {
-      width: '50%',
-    },
+    width: '80%',
     [theme.breakpoints.down('md')]: {
+      margin: '0 auto',
       width: '50%',
+      // height: '350px',
     },
     [theme.breakpoints.down('sm')]: {
+      margin: '0 auto',
       width: '100%',
       height: '350px',
       marginBottom: '30px',
@@ -62,7 +56,7 @@ export default makeStyles((theme) => ({
     display: 'flex',
     justifyContent: 'space-between',
     width: '100%',
-    [theme.breakpoints.down(800)]: {
+    [theme.breakpoints.down('sm')]: {
       flexDirection: 'column',
     },
   },

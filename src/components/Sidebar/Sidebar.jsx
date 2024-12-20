@@ -22,14 +22,12 @@ const Sidebar = ({ setMobileOpen }) => {
   const { genreIdOrCategoryName } = useSelector((state) => state.currentGenreOrCategory);
   const theme = useTheme();
   const classes = useStyles();
-  const { data, error, isFetching } = useGetGenresQuery();
+  const { data, isFetching } = useGetGenresQuery();
   const dispatch = useDispatch();
 
   useEffect(() => {
     setMobileOpen(false);
   }, [genreIdOrCategoryName]);
-
-  if (error) return 'An error has occured';
 
   return (
     <>
@@ -37,14 +35,12 @@ const Sidebar = ({ setMobileOpen }) => {
         <img
           className={classes.image}
           src={theme.palette.mode === 'light' ? redLogo : blueLogo}
-          alt="Logo"
+          alt="Filmpire logo"
         />
       </Link>
       <Divider />
       <List>
-        <ListSubheader>
-          Categories
-        </ListSubheader>
+        <ListSubheader>Categories</ListSubheader>
         {categories.map(({ label, value }) => (
           <Link key={value} className={classes.links} to="/">
             <ListItem onClick={() => dispatch(selectGenreOrCategory(value))} button>
@@ -58,9 +54,7 @@ const Sidebar = ({ setMobileOpen }) => {
       </List>
       <Divider />
       <List>
-        <ListSubheader>
-          Genres
-        </ListSubheader>
+        <ListSubheader>Genres</ListSubheader>
         {isFetching ? (
           <Box display="flex" justifyContent="center">
             <CircularProgress />

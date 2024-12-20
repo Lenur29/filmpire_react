@@ -1,21 +1,16 @@
 import { useEffect, useContext } from 'react';
-import { useHistory } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
 import alanBtn from '@alan-ai/alan-sdk-web';
-import { ColorModeContext } from '../utils/ToggleColorMode';
+import { useDispatch } from 'react-redux';
+import { useHistory } from 'react-router-dom';
+
 import { selectGenreOrCategory, searchMovie } from '../features/currentGenreOrCategory';
+import { ColorModeContext } from '../utils/ToggleColorMode';
 import { fetchToken } from '../utils';
 
 const useAlan = () => {
   const { setMode } = useContext(ColorModeContext);
-  const history = useHistory();
   const dispatch = useDispatch();
-
-  const logout = () => {
-    localStorage.clear();
-
-    history.push('/');
-  };
+  const history = useHistory();
 
   useEffect(() => {
     alanBtn({
@@ -41,7 +36,8 @@ const useAlan = () => {
         } else if (command === 'login') {
           fetchToken();
         } else if (command === 'logout') {
-          logout();
+          localStorage.clear();
+          history.push('/');
         } else if (command === 'search') {
           dispatch(searchMovie(query));
         }

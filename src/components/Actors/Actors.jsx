@@ -1,11 +1,14 @@
-import React, { useState } from 'react';
-import { Box, Button, CircularProgress, Grid, Typography } from '@mui/material';
-import { useHistory, useParams } from 'react-router-dom';
-import { ArrowBack } from '@mui/icons-material';
-import MovieList from '../MovieList/MovieList';
-import useStyles from './styles';
-import { useGetActorDetailsQuery, useGetMoviesByActorIdQuery } from '../../services/TMDB';
-import Pagination from '../Pagination/Pagination';
+import React, { useState } from "react";
+import { Box, Button, CircularProgress, Grid, Typography } from "@mui/material";
+import { useHistory, useParams } from "react-router-dom";
+import { ArrowBack } from "@mui/icons-material";
+
+import useStyles from "./styles";
+import {
+  useGetActorsDetailsQuery,
+  useGetMoviesByActorIdQuery,
+} from "../../services/TMDB";
+import { MovieList, Pagination } from "..";
 
 const Actors = () => {
   const { id } = useParams();
@@ -13,7 +16,7 @@ const Actors = () => {
   const classes = useStyles();
   const [page, setPage] = useState(1);
 
-  const { data, isFetching, error } = useGetActorDetailsQuery(id);
+  const { data, isFetching, error } = useGetActorsDetailsQuery(id);
   const { data: movies } = useGetMoviesByActorIdQuery({ id, page });
 
   if (isFetching) {
@@ -31,7 +34,6 @@ const Actors = () => {
           startIcon={<ArrowBack />}
           onClick={() => history.goBack()}
           color="primary"
-          className={classes.button}
         >
           Go back
         </Button>
@@ -46,7 +48,7 @@ const Actors = () => {
           <img
             className={classes.image}
             src={`https://image.tmdb.org/t/p/w780/${data?.profile_path}`}
-            alt={data?.name}
+            alt={data.name}
           />
         </Grid>
         <Grid
@@ -54,9 +56,9 @@ const Actors = () => {
           lg={7}
           xl={8}
           style={{
-            display: 'flex',
-            justifyContent: 'center',
-            flexDirection: 'column',
+            display: "flex",
+            justifyContent: "center",
+            flexDirection: "column",
           }}
         >
           <Typography variant="h2" gutterBottom>
@@ -66,13 +68,22 @@ const Actors = () => {
             Born: {new Date(data?.birthday).toDateString()}
           </Typography>
           <Typography variant="body1" align="justify" paragraph>
-            {data?.biography || 'Sorry, no biography yet...'}
+            {data?.biography || "Sorry, no biography yet..."}
           </Typography>
           <Box marginTop="2rem" display="flex" justifyContent="space-around">
-            <Button variant="contained" color="primary" target="_blank" href={`https://www.imdb.com/name/${data?.imdb}`} className={classes.button}>
+            <Button
+              variant="contained"
+              color="primary"
+              target="_blank"
+              href={`https://www.imdb.com/name/${data?.imdb_id}`}
+            >
               IMDB
             </Button>
-            <Button startIcon={<ArrowBack />} onClick={() => history.goBack()} color="primary" className={classes.button}>
+            <Button
+              startIcon={<ArrowBack />}
+              onClick={() => history.goBack()}
+              color="primary"
+            >
               Back
             </Button>
           </Box>
@@ -83,7 +94,11 @@ const Actors = () => {
           Movies
         </Typography>
         {movies && <MovieList movies={movies} numberOfMovies={12} />}
-        <Pagination currentPage={page} setPage={setPage} totalPages={movies?.total_pages} />
+        <Pagination
+          currentPage={page}
+          setPage={setPage}
+          totalPages={movies?.total_pages}
+        />
       </Box>
     </>
   );

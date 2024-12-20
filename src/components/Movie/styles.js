@@ -3,9 +3,6 @@ import { makeStyles } from '@mui/styles';
 export default makeStyles((theme) => ({
   movie: {
     padding: '10px',
-    [theme.breakpoints.between(700, 900)]: {
-      maxWidth: '50% !important',
-    },
   },
   links: {
     alignItems: 'center',
