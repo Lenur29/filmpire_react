@@ -37,7 +37,7 @@ const Movies = () => {
 
   return (
     <div>
-      <FeaturedMovie movie={data.results[0]} />
+      <FeaturedMovie movie={data.results[0]} key={data.results[0]?.id} />
       <MovieList movies={data} numberOfMovies={numberOfMovies} excludeFirst />
       <Pagination currentPage={page} setPage={setPage} totalPages={data.total_pages} />
     </div>

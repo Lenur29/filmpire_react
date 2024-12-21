@@ -1,40 +1,57 @@
-import React, { useState, useEffect, useContext } from 'react';
-import { AppBar, IconButton, Toolbar, Drawer, Button, Avatar, useMediaQuery } from '@mui/material';
-import { Menu, AccountCircle, Brightness4, Brightness7 } from '@mui/icons-material';
-import { Link } from 'react-router-dom';
-import { useTheme } from '@mui/material/styles';
-import { useDispatch, useSelector } from 'react-redux';
+import React, { useState, useEffect, useContext } from "react";
+import {
+  AppBar,
+  IconButton,
+  Toolbar,
+  Drawer,
+  Button,
+  Avatar,
+  useMediaQuery,
+} from "@mui/material";
+import {
+  Menu,
+  AccountCircle,
+  Brightness4,
+  Brightness7,
+} from "@mui/icons-material";
+import { Link } from "react-router-dom";
+import { useTheme } from "@mui/material/styles";
+import { useDispatch, useSelector } from "react-redux";
 
-import { ColorModeContext } from '../../utils/ToggleColorMode';
-import { setUser, userSelector } from '../../features/auth';
-import { Sidebar, Search } from '..';
-import { fetchToken, createSessionId, moviesApi } from '../../utils';
-import useStyles from './styles';
+import { ColorModeContext } from "../../utils/ToggleColorMode";
+import { setUser, userSelector } from "../../features/auth";
+import { Sidebar, Search } from "..";
+import { fetchToken, createSessionId, moviesApi } from "../../utils";
+import useStyles from "./styles";
 
 const NavBar = () => {
   const { isAuthenticated, user } = useSelector(userSelector);
   const [mobileOpen, setMobileOpen] = useState(false);
   const classes = useStyles();
-  const isMobile = useMediaQuery('(max-width:600px)');
+  const isMobile = useMediaQuery("(max-width:600px)");
   const theme = useTheme();
   const dispatch = useDispatch();
 
   const colorMode = useContext(ColorModeContext);
 
-  const token = localStorage.getItem('request_token');
-  const sessionIdFromLocalStorage = localStorage.getItem('session_id');
+  const token = localStorage.getItem("request_token");
+  const sessionIdFromLocalStorage = localStorage.getItem("session_id");
 
   useEffect(() => {
     const logInUser = async () => {
       if (token) {
         if (sessionIdFromLocalStorage) {
-          const { data: userData } = await moviesApi.get(`/account?session_id=${sessionIdFromLocalStorage}`);
+          const { data: userData } = await moviesApi.get(
+            `/account?session_id=${sessionIdFromLocalStorage}`
+          );
 
           dispatch(setUser(userData));
         } else {
           const sessionId = await createSessionId();
 
-          const { data: userData } = await moviesApi.get(`/account?session_id=${sessionId}`);
+          const { data: userData } = await moviesApi.get(
+            `/account?session_id=${sessionId}`
+          );
 
           dispatch(setUser(userData));
         }
@@ -52,15 +69,20 @@ const NavBar = () => {
             <IconButton
               color="inherit"
               edge="start"
-              style={{ outline: 'none' }}
+              style={{ outline: "none" }}
               onClick={() => setMobileOpen((prevMobileOpen) => !prevMobileOpen)}
               className={classes.menuButton}
             >
               <Menu />
             </IconButton>
           )}
-          <IconButton color="inherit" sx={{ ml: 1 }} onClick={colorMode.toggleColorMode}>
-            {theme.palette.mode === 'dark' ? <Brightness7 /> : <Brightness4 />}
+          <IconButton
+            color="inherit"
+            sx={{ ml: 1 }}
+            onClick={colorMode.toggleColorMode}
+            key={theme.palette.mode}
+          >
+            {theme.palette.mode === "dark" ? <Brightness7 /> : <Brightness4 />}
           </IconButton>
           {!isMobile && <Search />}
           <div>
@@ -102,7 +124,11 @@ const NavBar = () => {
               <Sidebar setMobileOpen={setMobileOpen} />
             </Drawer>
           ) : (
-            <Drawer classes={{ paper: classes.drawerPaper }} variant="permanent" open>
+            <Drawer
+              classes={{ paper: classes.drawerPaper }}
+              variant="permanent"
+              open
+            >
               <Sidebar setMobileOpen={setMobileOpen} />
             </Drawer>
           )}
